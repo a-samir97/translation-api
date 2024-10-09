@@ -3,7 +3,7 @@
 This project is a REST API built using GoLang and Gin framework that translates Arabic sentences in a transcription to English.
 
 ### Project Structure
-
+```
 ├── handlers            # Contains the handler logic for the API
 │   └── translate.go    # The main controller handling the transcription translation
 ├──routers              # contains router for every API (URL)
@@ -18,6 +18,7 @@ This project is a REST API built using GoLang and Gin framework that translates 
 ├── go.sum              # Go dependencies lock file
 ├── main.go             # The entry point of the application; initializes the Gin router
 ├── README.md           # Documentation for how to run and use the project
+```
 
 ### Screen Shot
 ![Request 1](/docs/request1.png)
