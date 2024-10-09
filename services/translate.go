@@ -3,9 +3,13 @@ package services
 import (
 	"GinniBackend/models"
 	"context"
-	"fmt"
 
 	"github.com/sashabaranov/go-openai"
+)
+
+const (
+	// number of tokens
+	MAX_TOKEN = 5000
 )
 
 type OpenAIClient interface {
@@ -56,7 +60,7 @@ func (t *TranslateService) TranslateToEnglish(text string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(resp.Choices[0].Message.Content, text)
+
 	return resp.Choices[0].Message.Content, nil
 }
 
@@ -67,4 +71,34 @@ func (t *TranslateService) IsArabic(text string) bool {
 		}
 	}
 	return false
+}
+
+// NOTE: Implement HandleLongTranscription
+func (t *TranslateService) HandleLongTranscription(transcripts []models.Transcription) ([]models.Transcription, error) {
+	var result []models.Transcription
+
+	for _, batch := range transcripts {
+		batchChars := len(batch.Sentence)
+		// check of the batch size is greater than the max token
+		if batchChars <= MAX_TOKEN {
+			translatedBatch, err := t.TranslateToEnglish(batch.Sentence)
+			if err != nil {
+				return nil, err
+			}
+			batch.Sentence = translatedBatch
+			result = append(result, batch)
+			continue
+		} else {
+			chunks := batchChars / MAX_TOKEN
+			for i := 0; i < chunks; i++ {
+				translatedBatch, err := t.TranslateToEnglish(batch.Sentence[i*MAX_TOKEN : (i+1)*MAX_TOKEN])
+				if err != nil {
+					return nil, err
+				}
+				batch.Sentence = translatedBatch
+				result = append(result, batch)
+			}
+		}
+	}
+	return result, nil
 }
