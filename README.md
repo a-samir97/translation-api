@@ -13,13 +13,19 @@ This project is a REST API built using GoLang and Gin framework that translates 
     ```
     go mod tidy
     ```
-
-3. Run the application:
+    
+3. Add env file:
+    ```
+    touch .env
+    OPENAI_KEY_API=#### 
+    ```
+    
+4. Run the application:
     ```
     go run main.go
     ```
 
-4. Test the API:
+5. Test the API:
     Use Postman or curl to send a POST request to `http://localhost:8080/translate` with a JSON body like:
     ```json
     [
@@ -28,7 +34,7 @@ This project is a REST API built using GoLang and Gin framework that translates 
     ]
     ```
 
-5. To run the tests:
+6. To run the tests:
     ```
-    go test ./...
+    go test ./tests
     ```
