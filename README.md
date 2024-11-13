@@ -39,7 +39,7 @@ This project is a REST API built using GoLang and Gin framework that translates 
 3. Add env file:
     ```
     touch .env
-    OPENAI_KEY_API=#### 
+    OPENAI_API_KEY=#### 
     ```
     
 4. Run the application:
@@ -48,7 +48,7 @@ This project is a REST API built using GoLang and Gin framework that translates 
     ```
 
 5. Test the API:
-    Use Postman or curl to send a POST request to `http://localhost:8080/translate` with a JSON body like:
+    Use Postman or curl to send a POST request to `http://localhost:8000/translate` with a JSON body like:
     ```json
     [
       {"speaker": "John", "time": "00:00:04", "sentence": "Hello Maria."},
